@@ -1,11 +1,36 @@
 const express = require('express');
+
+// * moongose to handle and connect our data-Base
+const moongose = require('mongoose');
+
+// * express APP
 const app = express();
+
+// * connect to mongoDB
+const dbMongito =
+	'mongodb+srv://juanito:test1234@cursonodetest.bmb0w.mongodb.net/cursoNodeTest?retryWrites=true&w=majority';
+
+moongose
+	.connect(dbMongito)
+	.then((resolve) => {
+		// * lister for a request
+		console.log('Conected to DB');
+		app.listen(3000);
+	})
+	.catch((error) => console.error(error));
 
 // * register view engine
 app.set('view engine', 'ejs');
 
-// * lister for a request
-app.listen(3000);
+/* app.use((req, res, next) => {
+	console.log('New request made:');
+	console.log('host: ', req.hostname);
+	console.log('path: ', req.path);
+	console.log('method: ', req.method);
+	next();
+}); */
+
+app.use(express.static('public'));
 
 // * Request main index
 app.get('/', (req, res) => {
