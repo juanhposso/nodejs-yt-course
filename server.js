@@ -31,10 +31,7 @@ const server = http.createServer((req, res) => {
 
 	// send HTML file
 	fs.readFile(__dirname + path, (err, data) => {
-		if (err) {
-			console.error(err);
-			res.end();
-		} else {
+		if (!err) {
 			res.end(data);
 		}
 	});

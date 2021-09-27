@@ -12,3 +12,9 @@ const writeStream = fs.createWriteStream('./docs/blog3.txt');
 
 // Piping
 readStream.pipe(writeStream);
+
+console.log('iniciar');
+
+console.log(nombre);
+let nombre = 'juan';
+console.log('termine');
