@@ -16,9 +16,9 @@ const blogScheme = new Scheme(
 			required: true,
 		},
 	},
-	{ timestamps: true }
+	{ timestamps: true, trim: true }
 );
 
-const Blog = mongoose.model('Blogs', blogScheme);
+const Blog = mongoose.model('Blog', blogScheme);
 
 module.exports = Blog;

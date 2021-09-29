@@ -23,8 +23,9 @@ moongose
 // * register view engine
 app.set('view engine', 'ejs');
 
-// * use to past out the static files
+// * middleware & static files
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 // * add and save into the DB
 app.get('/add-blog', (req, res) => {
@@ -71,6 +72,11 @@ app.get('/about-us', (req, res) => {
 	res.redirect('/about');
 });
 
+// * createa a new blog post
+app.get('/blogs/create', (req, res) => {
+	res.render('create', { title: 'create a new blog' });
+});
+
 // * main file come from index
 app.get('/blogs', (req, res) => {
 	Blog.find()
@@ -81,9 +87,26 @@ app.get('/blogs', (req, res) => {
 		.catch(console.error);
 });
 
-// * createa a new blog post
-app.get('/blogs/create', (req, res) => {
-	res.render('create', { title: 'create a new blog' });
+// * Post method from FORM
+app.post('/blogs', (req, res) => {
+	const blog = new Blog(req.body);
+
+	blog
+		.save()
+		.then((resultado) => {
+			res.redirect('/');
+		})
+		.catch(console.error);
+});
+
+// * request single blog
+app.get('/blogs/:id', (req, res) => {
+	const id = req.params.id;
+	Blog.findById(id)
+		.then((resultado) => {
+			res.render('details', { blog: resultado, title: 'Blog detail' });
+		})
+		.catch(console.error);
 });
 
 // * 404
