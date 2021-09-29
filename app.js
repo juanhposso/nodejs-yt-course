@@ -109,6 +109,18 @@ app.get('/blogs/:id', (req, res) => {
 		.catch(console.error);
 });
 
+// * request comes from front-end as a delete method by using fetch we handle it and send back a json answer
+// * json answer was handle it  front-end
+app.delete('/blogs/:id', (req, res) => {
+	const id = req.params.id;
+
+	Blog.findByIdAndDelete(id)
+		.then((result) => {
+			res.json({ redirect: '/blogs' });
+		})
+		.catch((err) => console.error(err));
+});
+
 // * 404
 app.use((req, res) => {
 	res.status(404).render('404', { title: '404' });
